@@ -54,11 +54,21 @@ with open(csvpath, 'r') as csvfile:
           max_change=change
           max_change_date=row[0]
         elif change<min_change:
-          min_change=change
+          min_change=changecd
           min_change_date=row[0]  
             
     #To calculate the average of the changes
     ave_change=round(mean(change_list),2)
+
+#print the below statements in the terminal
+print('Financial Analysis\n'
+    '----------------------------\n'
+    f'Total Months: {count_months}\n'
+    f'Total: ${total_sum}\n'
+    f'Average Change: ${ave_change}\n'
+    f'Greatest Increase in Profits: {max_change_date}(${max_change})\n'
+    f'Greatest Decrease in Profits: {min_change_date}(${min_change})')
+
     
     
 #defining path for output.textfile in Analysis folder

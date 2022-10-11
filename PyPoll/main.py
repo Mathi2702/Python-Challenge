@@ -21,30 +21,31 @@ winner_candidate=""
 
 #with function to read the csv file
 with open(csvpath, 'r') as csvfile:
-
     #csv reader specifies the variable and delimiter
     csvreader=csv.reader(csvfile, delimiter=',')
 
     #To remove the header file
     header=next(csvreader)
+
     #for loop to count the total id
     for row in csvreader:
-       ballot_id.append(row[0])
-       candidate_name = row[2]
-       count += 1
-       # If the candidate does not match any existing candidate add it the
-       # the candidate list
-       if candidate_name not in candidate_list:
-           # Add the candidate name to the candidate list.
-           candidate_list.append(candidate_name)
-           #Tracking the candidate's voter count.
-           candidate_votes[candidate_name] = 0
-           #Add a vote to that candidate's count
-           candidate_votes[candidate_name] += 1
-       else:
-            # Add a vote to that candidate's count
+        ballot_id.append(row[0])
+        candidate_name = row[2]
+        count += 1
+
+        # If the candidate does not match any existing candidate add it to
+        # the candidate list
+        if candidate_name not in candidate_list:
+            #Add the candidate name to the candidate list.
+            candidate_list.append(candidate_name)
+            #Tracking the candidate's voter count.
+            candidate_votes[candidate_name] = 0
+            #Add a vote to that candidate's count
             candidate_votes[candidate_name] += 1
-            
+        else:
+            #Add a vote to that candidate's count
+            candidate_votes[candidate_name] += 1    
+
 #defining path for output.textfile in Analysis folder
 output=os.path.join('Analysis', 'output.txt')   
 
@@ -69,7 +70,21 @@ with open(output, 'w') as textfile:
                    f'winner : {winner_candidate}\n'
                    f'----------------------------------------\n')            
 
-  
-        
-
+#to write the output in the terminal 
+print('Election Results\n'
+                '----------------------------------------\n'
+                f'Total Vote:{count}\n'
+                '----------------------------------------\n')              
+    #for loop to calculate the percent
+for candidate in candidate_votes:
+    votes=candidate_votes[candidate]
+    percent=float(votes/count)*100
+    #if loop to determine the winner candidate with highest vote count
+    if (votes>winner):
+        winner=votes
+        winner_candidate=candidate
+    print(f"{candidate}: {percent:.3f}% ({votes:})\n")
+print(f'----------------------------------------\n'
+      f'winner : {winner_candidate}\n'
+      f'----------------------------------------\n')        
      
